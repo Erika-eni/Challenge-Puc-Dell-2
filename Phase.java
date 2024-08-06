@@ -1,6 +1,5 @@
 package Game;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +7,7 @@ import java.util.List;
 public class Phase {
     private List<Match> matches;
 
-    //organiza a partida
+
     public Phase(List<Team> teams) {
         this.matches = new ArrayList<>();
         Collections.shuffle(teams);
