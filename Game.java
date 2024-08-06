@@ -1,6 +1,7 @@
 package Game;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -8,6 +9,7 @@ import java.util.Scanner;
 public class Game {
     public static void main(String[] args) {
         List<Team> teams = new ArrayList<>();
+        List<Team> allTeams = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
         int teamsNumber = 0;
@@ -34,6 +36,7 @@ public class Game {
                             scanner.nextLine();
                             Team team = new Team(name, warCry, yearFoundation);
                             teams.add(team);
+                            allTeams.add(team);  // Adiciona o time à lista de todos os times
                             break;
                         } catch (InputMismatchException e) {
                             System.out.println("Invalid input. Please try again.");
@@ -94,14 +97,20 @@ public class Game {
                 teams.clear();
             }
         }
+        
+        allTeams.sort(Comparator.comparingInt(Team::getPoints).reversed());
 
-        System.out.println("The winner of the championship is: " + teams.get(0).getName());
-        System.out.println("War cry: " + teams.get(0).getWarCry());
-        System.out.println("Year of foundation: " + teams.get(0).getYearFoundation());
-        System.out.println("Final points: " + teams.get(0).getPoints());
-        System.out.println("Blots: " + teams.get(0).getBlots());
-        System.out.println("Plifs: " + teams.get(0).getPlifs());
-        System.out.println("Advrunghs: " + teams.get(0).getAdvrunghs());
-        System.out.println("Grushts: " + teams.get(0).getGrushts());
+        System.out.println("-----------------------Final standings:-----------------------");
+        for (Team team : allTeams) {
+            System.out.println("TEAM: " + team.getName());
+            System.out.println("War cry: " + team.getWarCry());
+            System.out.println("Year of foundation: " + team.getYearFoundation());
+            System.out.println("Final points: " + team.getPoints());
+            System.out.println("Blots: " + team.getBlots());
+            System.out.println("Plifs: " + team.getPlifs());
+            System.out.println("Advrunghs: " + team.getAdvrunghs());
+            System.out.println("Grushts: " + team.getGrushts());
+            System.out.println("-------------------------------------------------");
+        }
     }
 }
