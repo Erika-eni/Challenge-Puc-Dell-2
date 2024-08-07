@@ -6,8 +6,6 @@ import java.util.List;
 
 public class Phase {
     private List<Match> matches;
-
-
     public Phase(List<Team> teams) {
         this.matches = new ArrayList<>();
         Collections.shuffle(teams);
@@ -15,11 +13,9 @@ public class Phase {
             matches.add(new Match(teams.get(i), teams.get(i + 1)));
         }
     }
-
     public List<Match> getMatches() {
         return matches;
     }
-
     public boolean matchesEnded() {
         for (Match match : matches) {
             if (!match.isFinished()) {
@@ -28,7 +24,6 @@ public class Phase {
         }
         return true;
     }
-
     public List<Team> getWinners() {
         List<Team> winners = new ArrayList<>();
         for (Match match : matches) {

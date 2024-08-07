@@ -14,12 +14,13 @@ public class Game {
         int teamsNumber = 0;
         while (true) {
             try {
+                System.out.println("-------------------------------------------------");
                 System.out.println("\nEnter the number of teams (8 to 16, even numbers only):");
                 teamsNumber = scanner.nextInt();
                 scanner.nextLine();
 
                 if (teamsNumber < 8 || teamsNumber > 16 || teamsNumber % 2 != 0) {
-                    System.out.println("⚠\uFE0FInvalid number of teams.");
+                    System.out.println("⚠️Invalid number of teams.");
                     continue;
                 }
 
@@ -38,14 +39,14 @@ public class Game {
                             allTeams.add(team);
                             break;
                         } catch (Exception e) {
-                            System.out.println("⚠\uFE0FInvalid input. Please try again.");
+                            System.out.println("⚠️Invalid input. Please try again.");
                             scanner.nextLine();
                         }
                     }
                 }
                 break;
             } catch (Exception e) {
-                System.out.println("⚠\uFE0FInvalid input. Please try again.");
+                System.out.println("⚠️Invalid input. Please try again.");
                 scanner.nextLine();
             }
         }
@@ -54,6 +55,7 @@ public class Game {
             Phase phase = new Phase(teams);
 
             while (!phase.matchesEnded()) {
+                System.out.println("-------------------------------------------------");
                 System.out.println("Current matches:");
                 for (int i = 0; i < phase.getMatches().size(); i++) {
                     Match match = phase.getMatches().get(i);
@@ -64,59 +66,78 @@ public class Game {
                     }
                 }
                 System.out.println("-------------------------------------------------");
+                System.out.println("[S] Save game");
+                System.out.println("[L] Load game");
+                System.out.println("Select a match to play:");
 
-                int matchIndex = -1;
-                while (true) {
-                    try {
-                        System.out.println("Select a match to play:");
-                        matchIndex = scanner.nextInt() - 1;
-                        scanner.nextLine();
-
-                        if (matchIndex >= 0 && matchIndex < phase.getMatches().size() && !phase.getMatches().get(matchIndex).isFinished()) {
-                            break;
-                        } else {
-                            System.out.println("⚠\uFE0FInvalid match selection. Try again.");
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("S")) {
+                    System.out.println("-------------------------------------------------");
+                    System.out.println("Enter the name for the save file:");
+                    String fileName = scanner.nextLine();
+                    SaveGame.saveGame(fileName + ".dat", teams, phase.getMatches());
+                    continue;
+                } else if (input.equalsIgnoreCase("L")) {
+                    System.out.println("-------------------------------------------------");
+                    System.out.println("Enter the name of the save file to load:");
+                    String fileName = scanner.nextLine();
+                    GameData loadedData = SaveGame.loadGame(fileName + ".dat");
+                    if (loadedData != null) {
+                        teams = loadedData.getTeams();
+                        phase = new Phase(teams);
+                        System.out.println("-------------------------------------------------");
+                        System.out.println("Loaded matches:");
+                        for (int i = 0; i < loadedData.getMatches().size(); i++) {
+                            Match match = loadedData.getMatches().get(i);
+                            if (match.isFinished()) {
+                                System.out.println("[" + (i + 1) + "] " + match.getTeam1().getName() + "  v̶s̶ " + match.getTeam2().getName());
+                            } else {
+                                System.out.println("[" + (i + 1) + "] " + match.getTeam1().getName() + " vs " + match.getTeam2().getName());
+                            }
                         }
-                    } catch (Exception e) {
-                        System.out.println("⚠\uFE0FInvalid input. Please try again.");
-                        scanner.nextLine();
                     }
+                    continue;
                 }
 
-                Match selectedMatch = phase.getMatches().get(matchIndex);
-                selectedMatch.startMatch();
+                int matchIndex;
+                try {
+                    matchIndex = Integer.parseInt(input) - 1;
+                } catch (NumberFormatException e) {
+                    System.out.println("⚠️Invalid input. Please try again.");
+                    continue;
+                }
+
+                if (matchIndex >= 0 && matchIndex < phase.getMatches().size() && !phase.getMatches().get(matchIndex).isFinished()) {
+                    Match selectedMatch = phase.getMatches().get(matchIndex);
+                    selectedMatch.startMatch();
+                } else {
+                    System.out.println("⚠️Invalid match selection. Try again.");
+                }
             }
 
             teams = phase.getWinners();
 
             if (teams.size() == 2) {
                 System.out.println("-------------------------------------------------");
-                System.out.println("\uD83C\uDFC1 Final match: " + teams.get(0).getName() + " vs " + teams.get(1).getName());
+                System.out.println("🏁 Final match: " + teams.get(0).getName() + " vs " + teams.get(1).getName());
                 Match finalMatch = new Match(teams.get(0), teams.get(1));
                 finalMatch.startMatch();
                 teams.clear();
             }
         }
 
-        allTeams.sort(Comparator.comparingInt(Team::getPoints).reversed());
-
+        allTeams.sort(Comparator.comparing(Team::getPoints).reversed());
         System.out.println("-------------------------------------------------");
-        System.out.println("\nPodium:");
-        if (allTeams.size() >= 1) {
-            System.out.println("🥇 Gold: " + allTeams.get(0).getName() + " with " + allTeams.get(0).getPoints() + " points");
-        }
-        if (allTeams.size() >= 2) {
-            System.out.println("🥈 Silver: " + allTeams.get(1).getName() + " with " + allTeams.get(1).getPoints() + " points");
-        }
-        if (allTeams.size() >= 3) {
-            System.out.println("🥉 Bronze: " + allTeams.get(2).getName() + " with " + allTeams.get(2).getPoints() + " points");
-        }
+        System.out.println("🏆 Championship Results 🏆");
+        System.out.println("\uD83E\uDD47 Gold: " + allTeams.get(0).getName());
+        System.out.println("\uD83E\uDD48 Silver: " + allTeams.get(1).getName());
+        System.out.println("\uD83E\uDD49 Bronze: " + allTeams.get(2).getName());
+        System.out.println("-------------------------------------------------");
 
-        System.out.println("-----------------------Final standings:-----------------------");
         for (Team team : allTeams) {
-            System.out.println("---TEAM: " + team.getName());
-            System.out.println("War cry: " + team.getWarCry());
-            System.out.println("---Final points: " + team.getPoints());
+            System.out.println("--TEAM: " + team.getName());
+            System.out.println("War Cry: " + team.getWarCry());
+            System.out.println("--Points: " + team.getPoints());
             System.out.println("Blots: " + team.getBlots());
             System.out.println("Plifs: " + team.getPlifs());
             System.out.println("Advrunghs: " + team.getAdvrunghs());

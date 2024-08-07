@@ -1,9 +1,10 @@
 package Game;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Match {
+public class Match implements Serializable {
     private Team team1;
     private Team team2;
     private String finished;
@@ -13,12 +14,14 @@ public class Match {
         this.team2 = team2;
         this.finished = "No";
     }
+
     public Team getTeam1() {
         return team1;
     }
     public Team getTeam2() {
         return team2;
     }
+
     public boolean isFinished() {
         return "Yes".equals(finished);
     }
@@ -57,12 +60,14 @@ public class Match {
         }
     }
     private void doGrusht() {
+        System.out.println("-------------------------------------------------");
         System.out.println("Beginning Grusht!");
         Random random = new Random();
         boolean endGrusht = false;
         while (!endGrusht) {
             int size1 = random.nextInt(101);
             int size2 = random.nextInt(101);
+            System.out.println("-------------------------------------------------");
             System.out.println("Scream volume from team 1: " + team1.getName() + ": " + size1);
             System.out.println("Scream volume from team 2: " + team2.getName() + ": " + size2);
             if (size1 > size2) {
@@ -74,7 +79,9 @@ public class Match {
                 System.out.println("Team " + team2.getName() + " won the grusht, more + 3 points.");
                 endGrusht = true;
             } else {
+                System.out.println("-------------------------------------------------");
                 System.out.println("A tie on Grusht. Restarting...");
+                System.out.println("-------------------------------------------------");
             }
         }
     }
@@ -96,7 +103,7 @@ public class Match {
                 scanner.nextLine();
                 processOption(option);
             } catch (Exception e) {
-                System.out.println("Invalid option, try again.");
+                System.out.println("⚠️Invalid option, try again.");
                 scanner.nextLine();
             }
         }
@@ -116,7 +123,6 @@ public class Match {
         System.out.println("[7] End match");
         System.out.println("-------------------------------------------------");
     }
-
     private void processOption(int option) {
         switch (option) {
             case 1 -> registerBlot(team1);
@@ -126,8 +132,7 @@ public class Match {
             case 5 -> registerAdvrungh(team1);
             case 6 -> registerAdvrungh(team2);
             case 7 -> endMatch();
-            default -> System.out.println("Invalid option, try again.");
+            default -> System.out.println("⚠️Invalid option, try again.");
         }
     }
-
 }

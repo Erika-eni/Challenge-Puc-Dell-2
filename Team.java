@@ -1,6 +1,8 @@
 package Game;
 
-public class Team {
+import java.io.Serializable;
+
+public class Team implements Serializable {
     private String name;
     private String warCry;
     private int yearFoundation;
@@ -23,7 +25,6 @@ public class Team {
 
     public String getName() {return name;}
     public String getWarCry() {return warCry;}
-    public int getYearFoundation() {return yearFoundation;}
     public int getBlots() {return blots;}
     public int getPoints() {return points;}
     public int getPlifs() {return plifs;}
