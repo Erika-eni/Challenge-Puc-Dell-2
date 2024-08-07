@@ -18,6 +18,7 @@ public class Match implements Serializable {
     public Team getTeam1() {
         return team1;
     }
+
     public Team getTeam2() {
         return team2;
     }
@@ -32,23 +33,27 @@ public class Match implements Serializable {
             seeIfIsEnded();
         }
     }
+
     public void registerPlif(Team team) {
         if (!isFinished()) {
             team.doPlif();
             seeIfIsEnded();
         }
     }
+
     public void registerAdvrungh(Team team) {
         if (!isFinished()) {
             team.doAdvrungh();
             seeIfIsEnded();
         }
     }
+
     private void seeIfIsEnded() {
         if (team1.getPoints() <= 0 || team2.getPoints() <= 0) {
             endMatch();
         }
     }
+
     public void endMatch() {
         this.finished = "Yes";
         Team winner = getWinner();
@@ -59,6 +64,7 @@ public class Match implements Serializable {
             doGrusht();
         }
     }
+
     private void doGrusht() {
         System.out.println("-------------------------------------------------");
         System.out.println("Beginning Grusht!");
@@ -85,15 +91,17 @@ public class Match implements Serializable {
             }
         }
     }
+
     public Team getWinner() {
-        if (team1.getPoints() > 0) {
+        if (team1.getPoints() > 0 && team1.getPoints() > team2.getPoints()) {
             return team1;
-        } else if (team2.getPoints() > 0) {
+        } else if (team2.getPoints() > 0 && team2.getPoints() > team1.getPoints()) {
             return team2;
         } else {
             return null;
         }
     }
+
     public void startMatch() {
         Scanner scanner = new Scanner(System.in);
         while (!isFinished()) {
@@ -108,6 +116,7 @@ public class Match implements Serializable {
             }
         }
     }
+
     private void printMatchStatus() {
         System.out.println("-------------------------------------------------");
         System.out.println("Match: " + team1.getName() + " vs " + team2.getName());
@@ -123,6 +132,7 @@ public class Match implements Serializable {
         System.out.println("[7] End match");
         System.out.println("-------------------------------------------------");
     }
+
     private void processOption(int option) {
         switch (option) {
             case 1 -> registerBlot(team1);

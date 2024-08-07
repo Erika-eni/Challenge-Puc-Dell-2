@@ -68,6 +68,7 @@ public class Game {
                 System.out.println("-------------------------------------------------");
                 System.out.println("[S] Save game");
                 System.out.println("[L] Load game");
+                System.out.println("[D] Delete game");
                 System.out.println("Select a match to play:");
 
                 String input = scanner.nextLine();
@@ -96,6 +97,12 @@ public class Game {
                             }
                         }
                     }
+                    continue;
+                } else if (input.equalsIgnoreCase("D")) {
+                    System.out.println("-------------------------------------------------");
+                    System.out.println("Enter the name of the save file to delete:");
+                    String fileName = scanner.nextLine();
+                    SaveGame.deleteGame(fileName + ".dat");
                     continue;
                 }
 

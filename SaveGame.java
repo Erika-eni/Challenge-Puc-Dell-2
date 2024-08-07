@@ -14,7 +14,6 @@ public class SaveGame {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public static GameData loadGame(String fileName) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
             List<Team> teams = (List<Team>) in.readObject();
