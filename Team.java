@@ -29,7 +29,6 @@ public class Team implements Serializable {
     public int getPoints() {return points;}
     public int getPlifs() {return plifs;}
     public int getAdvrunghs() {return advrunghs;}
-    public int getGrushts() {return grushts;}
 
     public void doBlot() {
         points += 5;

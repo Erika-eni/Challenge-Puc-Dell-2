@@ -10,10 +10,9 @@ public class SaveGame {
             out.writeObject(matches);
             System.out.println("Game saved successfully.");
         } catch (IOException e) {
-            System.out.println("Error saving game: " + e.getMessage());
+            System.out.println("⚠️ Error saving game: " + e.getMessage());
         }
     }
-
     public static GameData loadGame(String fileName) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
             List<Team> teams = (List<Team>) in.readObject();
@@ -21,17 +20,16 @@ public class SaveGame {
             System.out.println("Game loaded successfully.");
             return new GameData(teams, matches);
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading game: " + e.getMessage());
+            System.out.println("⚠️ Error loading game: " + e.getMessage());
             return null;
         }
     }
-
     public static void deleteGame(String fileName) {
         File file = new File(fileName);
         if (file.exists() && file.delete()) {
             System.out.println("Game deleted successfully.");
         } else {
-            System.out.println("Error deleting game.");
+            System.out.println("⚠️ Error deleting game.");
         }
     }
 }

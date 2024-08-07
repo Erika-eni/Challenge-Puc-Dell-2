@@ -56,7 +56,7 @@ public class Game {
 
             while (!phase.matchesEnded()) {
                 System.out.println("-------------------------------------------------");
-                System.out.println("Current matches:");
+                System.out.println("Matches:");
                 for (int i = 0; i < phase.getMatches().size(); i++) {
                     Match match = phase.getMatches().get(i);
                     if (!match.isFinished()) {
@@ -113,7 +113,6 @@ public class Game {
                     System.out.println("⚠️Invalid input. Please try again.");
                     continue;
                 }
-
                 if (matchIndex >= 0 && matchIndex < phase.getMatches().size() && !phase.getMatches().get(matchIndex).isFinished()) {
                     Match selectedMatch = phase.getMatches().get(matchIndex);
                     selectedMatch.startMatch();

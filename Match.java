@@ -101,7 +101,6 @@ public class Match implements Serializable {
             return null;
         }
     }
-
     public void startMatch() {
         Scanner scanner = new Scanner(System.in);
         while (!isFinished()) {
@@ -116,7 +115,6 @@ public class Match implements Serializable {
             }
         }
     }
-
     private void printMatchStatus() {
         System.out.println("-------------------------------------------------");
         System.out.println("Match: " + team1.getName() + " vs " + team2.getName());
@@ -132,7 +130,6 @@ public class Match implements Serializable {
         System.out.println("[7] End match");
         System.out.println("-------------------------------------------------");
     }
-
     private void processOption(int option) {
         switch (option) {
             case 1 -> registerBlot(team1);
