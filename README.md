@@ -2,7 +2,7 @@
 ---Description
 This is a competition game between teams where teams accumulate points through different actions during matches. Matches can end in a team's victory or a draw, resulting in a "Grusht" to decide the winner. This project includes functionality to save, load, and delete saved games.
 ---Authors
-Érila Fedrigo
+Érika Fedrigo
 ---Project Structure
 Team: Represents a participating team in the game.
 Match: Represents a match between two teams.
